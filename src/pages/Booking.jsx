@@ -65,6 +65,42 @@ const Booking = () => {
           </div>
         </div>
 
+        {/* Service Visual Spotlight */}
+        {selectedService && (
+          <div className="booking-service-spotlight">
+            <div className="booking-service-spotlight-left">
+              {selectedService.image ? (
+                <img
+                  src={selectedService.image}
+                  alt={selectedService.name}
+                  className="booking-spotlight-img"
+                />
+              ) : (
+                <div className="booking-spotlight-icon">{selectedService.icon}</div>
+              )}
+              <div>
+                <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", marginBottom: "0.25rem", flexWrap: "wrap" }}>
+                  <span className="badge badge-blue">{selectedService.category}</span>
+                  {selectedService.badge && (
+                    <span className="service-card-badge-special">{selectedService.badge}</span>
+                  )}
+                </div>
+                <h2 style={{ fontSize: "1.25rem", fontWeight: 700, color: "var(--text-main)", margin: 0 }}>
+                  {selectedService.name}
+                </h2>
+                <p style={{ color: "var(--text-muted)", fontSize: "0.85rem", marginTop: "0.2rem" }}>
+                  ⏱️ {selectedService.duration} • ★ {selectedService.rating} ({selectedService.reviewsCount} reviews)
+                </p>
+              </div>
+            </div>
+
+            <div className="booking-spotlight-price">
+              <div style={{ fontSize: "0.76rem", color: "var(--text-muted)", textTransform: "uppercase", fontWeight: 700 }}>Service Charge</div>
+              <div style={{ fontSize: "1.5rem", fontWeight: 800, color: "var(--primary)" }}>₹{selectedService.price}</div>
+            </div>
+          </div>
+        )}
+
         {/* Simple Booking Form */}
         {selectedService && <BookingForm service={selectedService} />}
       </div>

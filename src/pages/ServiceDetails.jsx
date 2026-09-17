@@ -9,6 +9,13 @@ const ServiceDetails = () => {
   const navigate = useNavigate();
 
   const service = servicesData.find((s) => s.id === parseInt(id));
+  const [activeImage, setActiveImage] = React.useState(service?.image || null);
+
+  React.useEffect(() => {
+    if (service) {
+      setActiveImage(service.image);
+    }
+  }, [service]);
 
   if (!service) {
     return (
@@ -28,6 +35,8 @@ const ServiceDetails = () => {
     .filter((s) => s.id !== service.id && s.category === service.category)
     .slice(0, 3);
 
+  const galleryImages = service.gallery || (service.image ? [service.image] : []);
+
   return (
     <div style={{ padding: "2rem 0 4.5rem" }}>
       <div className="container">
@@ -41,18 +50,51 @@ const ServiceDetails = () => {
         </div>
 
         {/* 2-Column Details Layout */}
-        <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "2rem", alignItems: "start" }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "2.2rem", alignItems: "start" }}>
           {/* Main Info */}
           <div>
-            <div style={{ display: "flex", alignItems: "center", gap: "0.9rem", marginBottom: "0.8rem" }}>
-              <div style={{ width: "52px", height: "52px", borderRadius: "12px", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.8rem" }}>
+            {/* Service Featured Image Banner */}
+            {activeImage && (
+              <div className="service-details-banner-container">
+                <img
+                  src={activeImage}
+                  alt={service.name}
+                  className="service-details-banner-img"
+                />
+                <div className="service-details-banner-badge">
+                  <span className="badge badge-blue">{service.category}</span>
+                  {service.badge && (
+                    <span className="service-card-badge-special">{service.badge}</span>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Gallery Thumbnails (if multiple images like Pest Control) */}
+            {galleryImages.length > 1 && (
+              <div className="service-details-gallery-row">
+                {galleryImages.map((imgSrc, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className={`gallery-thumb-btn ${activeImage === imgSrc ? "active" : ""}`}
+                    onClick={() => setActiveImage(imgSrc)}
+                  >
+                    <img src={imgSrc} alt={`${service.name} view ${idx + 1}`} />
+                  </button>
+                ))}
+              </div>
+            )}
+
+            <div style={{ display: "flex", alignItems: "center", gap: "0.9rem", margin: "1.2rem 0 0.6rem" }}>
+              <div style={{ width: "48px", height: "48px", borderRadius: "12px", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", flexShrink: 0 }}>
                 {service.icon}
               </div>
               <div>
                 <span className="badge badge-blue" style={{ marginBottom: "0.2rem" }}>
                   {service.category}
                 </span>
-                <h1 style={{ fontSize: "1.8rem", fontWeight: 800, color: "var(--text-main)", lineHeight: "1.2" }}>
+                <h1 style={{ fontSize: "1.85rem", fontWeight: 800, color: "var(--text-main)", lineHeight: "1.2" }}>
                   {service.name}
                 </h1>
               </div>
@@ -104,6 +146,15 @@ const ServiceDetails = () => {
           {/* Sticky Booking Sidebar */}
           <div style={{ position: "sticky", top: "80px" }}>
             <div className="summary-box">
+              {service.image && (
+                <div style={{ marginBottom: "1.1rem", borderRadius: "var(--radius-sm)", overflow: "hidden", height: "130px", border: "1px solid var(--border)" }}>
+                  <img
+                    src={service.image}
+                    alt={service.name}
+                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                  />
+                </div>
+              )}
               <span className="badge badge-blue" style={{ marginBottom: "0.5rem" }}>
                 Fixed Price
               </span>

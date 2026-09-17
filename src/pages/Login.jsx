@@ -1,56 +1,44 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Button from "../Components/Button";
+import serviqLogo from "../assets/serviqlogo.png";
 
-function Login() {
-  const navigate = useNavigate();
-  const { login } = useAuth();
-
-  const [formData, setFormData] = useState({
-    email: "",
-    password: ""
-  });
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-    setError("");
-  };
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.email || !formData.password) {
-      setError("Please enter your email and password.");
+    setError("");
+
+    if (!email || !password) {
+      setError("Please fill in all fields.");
       return;
     }
 
     setLoading(true);
-    setError("");
+    const result = login(email, password);
+    setLoading(false);
 
-    try {
-      const res = await login(formData.email, formData.password);
-      if (res.success) {
-        navigate("/");
-      } else {
-        setError(res.message || "Invalid credentials.");
-        setLoading(false);
-      }
-    } catch (err) {
-      setError("An unexpected login error occurred. Please try again.");
-      setLoading(false);
+    if (result.success) {
+      navigate(from, { replace: true });
+    } else {
+      setError(result.error || "Login failed. Please check credentials.");
     }
   };
 
   const handleUseDemo = () => {
-    setFormData({
-      email: "demo@serviq.com",
-      password: "password123"
-    });
+    setEmail("demo@serviq.com");
+    setPassword("password123");
     setError("");
   };
 
@@ -60,7 +48,7 @@ function Login() {
         {/* Brand Header */}
         <div style={{ textAlign: "center", marginBottom: "1.5rem" }}>
           <div className="brand-logo" style={{ justifyContent: "center", marginBottom: "0.6rem" }}>
-            <div className="brand-icon">⚡</div>
+            <img src={serviqLogo} alt="ServIQ" className="brand-logo-img" />
             <span>Serv<span className="text-iq">IQ</span></span>
           </div>
           <h1 style={{ fontSize: "1.45rem", fontWeight: 800, color: "var(--text-main)", marginBottom: "0.25rem" }}>
@@ -98,8 +86,11 @@ function Login() {
               name="email"
               className="form-input"
               placeholder="e.g. demo@serviq.com"
-              value={formData.email}
-              onChange={handleChange}
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError("");
+              }}
               required
             />
           </div>
@@ -111,8 +102,11 @@ function Login() {
               name="password"
               className="form-input"
               placeholder="Enter your password"
-              value={formData.password}
-              onChange={handleChange}
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError("");
+              }}
               required
             />
           </div>

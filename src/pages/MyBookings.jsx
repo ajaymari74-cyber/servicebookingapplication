@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getStoredBookings, cancelBookingById } from "../utils/bookingStorage";
+import { servicesData } from "../data/servicesData";
 import Button from "../Components/Button";
 
 export const MyBookings = () => {
@@ -73,25 +74,46 @@ export const MyBookings = () => {
         {/* Bookings List */}
         {filteredBookings.length > 0 ? (
           <div>
-            {filteredBookings.map((b) => (
-              <div key={b.id} className="booking-card">
-                {/* Left: Icon & Service Details */}
-                <div style={{ display: "flex", alignItems: "center", gap: "0.9rem", flex: 1 }}>
-                  <div style={{ width: "46px", height: "46px", borderRadius: "10px", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", flexShrink: 0 }}>
-                    {b.icon || "🛠️"}
-                  </div>
-                  <div>
-                    <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.2rem", flexWrap: "wrap" }}>
-                      <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text-main)" }}>
-                        {b.serviceName}
-                      </h3>
-                      {getStatusBadge(b.status)}
+            {filteredBookings.map((b) => {
+              const matchedService = servicesData.find(
+                (s) => s.id === b.serviceId || s.name.toLowerCase() === (b.serviceName || "").toLowerCase()
+              );
+              const serviceImg = b.image || matchedService?.image;
+
+              return (
+                <div key={b.id} className="booking-card">
+                  {/* Left: Image & Service Details */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "1rem", flex: 1 }}>
+                    {serviceImg ? (
+                      <img
+                        src={serviceImg}
+                        alt={b.serviceName}
+                        style={{
+                          width: "56px",
+                          height: "56px",
+                          borderRadius: "10px",
+                          objectFit: "cover",
+                          border: "1px solid var(--border)",
+                          flexShrink: 0
+                        }}
+                      />
+                    ) : (
+                      <div style={{ width: "46px", height: "46px", borderRadius: "10px", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", flexShrink: 0 }}>
+                        {b.icon || "🛠️"}
+                      </div>
+                    )}
+                    <div>
+                      <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.2rem", flexWrap: "wrap" }}>
+                        <h3 style={{ fontSize: "1.05rem", fontWeight: 700, color: "var(--text-main)" }}>
+                          {b.serviceName}
+                        </h3>
+                        {getStatusBadge(b.status)}
+                      </div>
+                      <p style={{ color: "var(--text-muted)", fontSize: "0.82rem" }}>
+                        Booking #{b.id} • 📍 {b.address}
+                      </p>
                     </div>
-                    <p style={{ color: "var(--text-muted)", fontSize: "0.82rem" }}>
-                      Booking #{b.id} • 📍 {b.address}
-                    </p>
                   </div>
-                </div>
 
                 {/* Center: Appointment Time */}
                 <div style={{ minWidth: "150px" }}>
@@ -132,8 +154,9 @@ export const MyBookings = () => {
                   </Button>
                 </div>
               </div>
-            ))}
-          </div>
+            );
+          })}
+        </div>
         ) : (
           <div style={{ textAlign: "center", padding: "3.5rem 1.25rem", background: "#ffffff", borderRadius: "var(--radius-md)", border: "1px solid var(--border)" }}>
             <div style={{ fontSize: "2.5rem", marginBottom: "0.6rem" }}>📅</div>

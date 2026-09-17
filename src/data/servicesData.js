@@ -1,9 +1,20 @@
+import electricianImg from "../assets/electriician services.jpg";
+import plumberImg from "../assets/plumpingservice.jpg";
+import acImg from "../assets/Ac cleaning.jpg";
+import cleaningImg from "../assets/housecleaning.jpg";
+import pestImg from "../assets/Pest Control & Sanitization.jpg";
+import pestImg2 from "../assets/Pest Control & Sanitization1.jpg";
+import paintingImg from "../assets/Home Painting & Touch-up.jpg";
+import carpentryImg from "../assets/Expert Carpentry & Furniture.jpg";
+import applianceImg from "../assets/Washing Machine & Refrigerator Repair.jpg";
+
 export const servicesData = [
   {
     id: 1,
     name: "Professional Electrician",
     category: "Electrical",
     icon: "⚡",
+    image: electricianImg,
     shortDesc: "Complete electrical repairs, wiring, switches & appliance installations.",
     description: "Certified electricians equipped to handle complete home and office electrical needs. From short circuits and faulty wiring to appliance installations, switchboard replacements, and safety inspections, we ensure your premises remain safe and power-efficient.",
     price: 499,
@@ -29,6 +40,7 @@ export const servicesData = [
     name: "Master Plumber Service",
     category: "Plumbing",
     icon: "🔧",
+    image: plumberImg,
     shortDesc: "Leak fixes, pipe repairs, tap installation and drainage solutions.",
     description: "Fast and reliable plumbing solutions by master technicians. We fix leaking faucets, blocked sinks, burst pipes, toilet cistern issues, water heater connections, and underground drainage problems using modern leak detection equipment.",
     price: 399,
@@ -54,6 +66,7 @@ export const servicesData = [
     name: "AC Deep Cleaning & Service",
     category: "AC & Appliances",
     icon: "❄️",
+    image: acImg,
     shortDesc: "Jet pump filter wash, cooling coil service, gas check and optimization.",
     description: "Comprehensive AC servicing designed to maximize cooling performance, eliminate musty odors, and cut electricity bills. Includes jet-pump deep cleaning of indoor/outdoor units, drain pipe flushing, and refrigerant gas pressure inspection.",
     price: 699,
@@ -79,6 +92,7 @@ export const servicesData = [
     name: "Full Home Deep Cleaning",
     category: "Cleaning",
     icon: "🧹",
+    image: cleaningImg,
     shortDesc: "Thorough deep cleaning of kitchen, bathrooms, bedrooms & living areas.",
     description: "Transform your living space with our top-to-bottom deep sanitization and cleaning package. Our crew utilizes industrial vacuum cleaners, eco-friendly degreasers, and steam sanitizers to remove tough stains, grime, and dust mites.",
     price: 1899,
@@ -104,6 +118,8 @@ export const servicesData = [
     name: "Pest Control & Sanitization",
     category: "Pest Control",
     icon: "🛡️",
+    image: pestImg,
+    gallery: [pestImg, pestImg2],
     shortDesc: "Targeted extermination of cockroaches, termites, bedbugs, and pests.",
     description: "Safe, odorless, and government-approved chemical treatments to rid your premises of cockroaches, termites, rodents, and ants. Child and pet friendly formulations that provide lasting defense against persistent pests.",
     price: 899,
@@ -129,6 +145,7 @@ export const servicesData = [
     name: "Home Painting & Touch-up",
     category: "Painting",
     icon: "🎨",
+    image: paintingImg,
     shortDesc: "Interior & exterior wall painting, waterproof putty and damp proofing.",
     description: "Give your walls a vibrant new life with flawless wall painting. We offer color consultation, laser room measurement, surface preparation, primer application, and two coats of premium luxury emulsion.",
     price: 2499,
@@ -154,6 +171,7 @@ export const servicesData = [
     name: "Expert Carpentry & Furniture",
     category: "Carpentry",
     icon: "🪚",
+    image: carpentryImg,
     shortDesc: "Furniture repair, lock replacement, modular fitting & custom assembly.",
     description: "Skilled carpenters for hinges replacement, bed assembly, wardrobe repairs, door alignment, lock installation, and custom wooden shelf fittings. Precise craftsmanship with high-grade hardware.",
     price: 449,
@@ -179,6 +197,7 @@ export const servicesData = [
     name: "Washing Machine & Refrigerator Repair",
     category: "AC & Appliances",
     icon: "🧺",
+    image: applianceImg,
     shortDesc: "Motor fixes, drainage errors, drum issues & compressor maintenance.",
     description: "Expert diagnostics and repairs for all major brands of front-load/top-load washing machines, refrigerators, and microwaves. We fix PCB errors, motor hums, spinning issues, water leakage, and cooling failures.",
     price: 549,
@@ -211,3 +230,8 @@ export const serviceCategories = [
   "Painting",
   "Carpentry"
 ];
+
+export const getServiceById = (id) => {
+  return servicesData.find((s) => s.id === parseInt(id));
+};
+

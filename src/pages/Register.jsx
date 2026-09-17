@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Button from "../Components/Button";
+import serviqLogo from "../assets/serviqlogo.png";
 
 export function Register() {
   const navigate = useNavigate();
@@ -85,7 +86,7 @@ export function Register() {
         {/* Brand Header */}
         <div style={{ textAlign: "center", marginBottom: "1.4rem" }}>
           <div className="brand-logo" style={{ justifyContent: "center", marginBottom: "0.6rem" }}>
-            <div className="brand-icon">⚡</div>
+            <img src={serviqLogo} alt="ServIQ" className="brand-logo-img" />
             <span>Serv<span className="text-iq">IQ</span></span>
           </div>
           <h1 style={{ fontSize: "1.45rem", fontWeight: 800, color: "var(--text-main)", marginBottom: "0.25rem" }}>

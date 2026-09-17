@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import serviqLogo from "../assets/serviqlogo.png";
 
 const Footer = () => {
   return (
@@ -9,7 +10,7 @@ const Footer = () => {
           {/* Brand Info */}
           <div>
             <div className="brand-logo" style={{ marginBottom: "0.75rem" }}>
-              <div className="brand-icon">⚡</div>
+              <img src={serviqLogo} alt="ServIQ" className="brand-logo-img" />
               <span>Serv<span className="text-iq">IQ</span></span>
             </div>
             <p style={{ color: "var(--text-muted)", fontSize: "0.88rem", lineHeight: "1.6", maxWidth: "300px" }}>

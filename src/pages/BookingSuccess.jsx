@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { getStoredBookings } from "../utils/bookingStorage";
+import { servicesData } from "../data/servicesData";
 import Button from "../Components/Button";
 
 const BookingSuccess = () => {
@@ -17,6 +18,11 @@ const BookingSuccess = () => {
       setBooking(all[0]);
     }
   }, [bookingId]);
+
+  const matchedService = booking
+    ? servicesData.find((s) => s.id === booking.serviceId || s.name === booking.serviceName)
+    : null;
+  const serviceImg = booking?.image || matchedService?.image;
 
   return (
     <div className="container" style={{ padding: "2.5rem 1.25rem 4.5rem" }}>
@@ -48,6 +54,30 @@ const BookingSuccess = () => {
             <span className="badge badge-blue">
               {booking ? booking.status : "Confirmed"}
             </span>
+          </div>
+
+          {/* Service Image and Name Highlight */}
+          <div style={{ display: "flex", gap: "0.9rem", alignItems: "center", marginBottom: "1rem", paddingBottom: "0.85rem", borderBottom: "1px solid var(--border)" }}>
+            {serviceImg ? (
+              <img
+                src={serviceImg}
+                alt={booking?.serviceName || "Service"}
+                style={{ width: "64px", height: "64px", borderRadius: "8px", objectFit: "cover", border: "1px solid var(--border)", flexShrink: 0 }}
+              />
+            ) : (
+              <div style={{ width: "50px", height: "50px", borderRadius: "8px", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", flexShrink: 0 }}>
+                {booking?.icon || "⚡"}
+              </div>
+            )}
+            <div style={{ textAlign: "left" }}>
+              <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", fontWeight: 700 }}>Service Booked</span>
+              <div style={{ fontWeight: 800, color: "var(--text-main)", fontSize: "1.05rem" }}>
+                {booking ? booking.serviceName : "Doorstep Service"}
+              </div>
+              {matchedService && (
+                <span className="badge badge-blue" style={{ marginTop: "0.2rem" }}>{matchedService.category}</span>
+              )}
+            </div>
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.9rem", fontSize: "0.88rem" }}>

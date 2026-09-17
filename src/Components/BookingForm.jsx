@@ -56,6 +56,7 @@ const BookingForm = ({ service }) => {
       serviceId: service ? service.id : 1,
       serviceName: service ? service.name : "Doorstep Service",
       icon: service ? service.icon : "⚡",
+      image: service ? service.image : null,
       date,
       time,
       customerName,
@@ -267,13 +268,21 @@ const BookingForm = ({ service }) => {
           </h3>
 
           {service ? (
-            <div style={{ display: "flex", gap: "0.75rem", alignItems: "center", marginBottom: "1rem", paddingBottom: "1rem", borderBottom: "1px solid var(--border)" }}>
-              <div style={{ width: "42px", height: "42px", borderRadius: "8px", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.4rem" }}>
-                {service.icon}
-              </div>
+            <div style={{ display: "flex", gap: "0.85rem", alignItems: "center", marginBottom: "1rem", paddingBottom: "1rem", borderBottom: "1px solid var(--border)" }}>
+              {service.image ? (
+                <img
+                  src={service.image}
+                  alt={service.name}
+                  style={{ width: "56px", height: "56px", borderRadius: "8px", objectFit: "cover", border: "1px solid var(--border)", flexShrink: 0 }}
+                />
+              ) : (
+                <div style={{ width: "46px", height: "46px", borderRadius: "8px", background: "var(--primary-light)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.4rem", flexShrink: 0 }}>
+                  {service.icon}
+                </div>
+              )}
               <div>
-                <h4 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)" }}>{service.name}</h4>
-                <p style={{ color: "var(--primary)", fontSize: "0.8rem", fontWeight: 600 }}>{service.category}</p>
+                <h4 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--text-main)", lineHeight: "1.3" }}>{service.name}</h4>
+                <p style={{ color: "var(--primary)", fontSize: "0.8rem", fontWeight: 600, marginTop: "0.15rem" }}>{service.category}</p>
               </div>
             </div>
           ) : (

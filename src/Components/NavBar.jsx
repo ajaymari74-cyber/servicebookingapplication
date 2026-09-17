@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Button from "./Button";
+import serviqLogo from "../assets/serviqlogo.png";
 
 const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -22,7 +23,7 @@ const NavBar = () => {
       <div className="container nav-container">
         {/* Brand Logo */}
         <Link to="/" className="brand-logo" onClick={closeMenu}>
-          <div className="brand-icon">⚡</div>
+          <img src={serviqLogo} alt="ServIQ" className="brand-logo-img" />
           <span>Serv<span className="text-iq">IQ</span></span>
         </Link>
 
