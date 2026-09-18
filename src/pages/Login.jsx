@@ -26,20 +26,14 @@ const Login = () => {
     }
 
     setLoading(true);
-    const result = login(email, password);
+    const result = await login(email, password);
     setLoading(false);
 
     if (result.success) {
       navigate(from, { replace: true });
     } else {
-      setError(result.error || "Login failed. Please check credentials.");
+      setError(result.error || result.message || "Login failed. Please check credentials.");
     }
-  };
-
-  const handleUseDemo = () => {
-    setEmail("demo@serviq.com");
-    setPassword("password123");
-    setError("");
   };
 
   return (
@@ -59,19 +53,6 @@ const Login = () => {
           </p>
         </div>
 
-        {/* 1-Click Demo Button */}
-        <div style={{ marginBottom: "1.2rem", padding: "0.75rem", background: "var(--bg-subtle)", border: "1px solid var(--border)", borderRadius: "var(--radius-sm)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <span style={{ fontSize: "0.82rem", color: "var(--text-muted)" }}>Testing the app?</span>
-          <Button
-            type="button"
-            variant="secondary"
-            size="sm"
-            onClick={handleUseDemo}
-          >
-            Fill Demo Login
-          </Button>
-        </div>
-
         {error && (
           <div style={{ padding: "0.65rem 0.85rem", background: "var(--danger-bg)", color: "var(--danger-text)", borderRadius: "var(--radius-sm)", marginBottom: "1.2rem", fontSize: "0.86rem" }}>
             ⚠️ {error}
@@ -85,7 +66,7 @@ const Login = () => {
               type="email"
               name="email"
               className="form-input"
-              placeholder="e.g. demo@serviq.com"
+              placeholder="e.g. yourname@example.com"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);

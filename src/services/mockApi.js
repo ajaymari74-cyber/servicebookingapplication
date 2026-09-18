@@ -213,6 +213,6 @@ export const loginUser = async (email, password) => {
 
   return {
     success: false,
-    message: "Invalid email or password. You can also use the Demo Account or Register."
+    message: "Invalid email or password. Please check your credentials or register."
   };
 };

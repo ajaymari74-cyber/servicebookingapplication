@@ -58,7 +58,9 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>© {new Date().getFullYear()} ServIQ Technologies. All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} ServIQ Technologies. Copyright © {new Date().getFullYear()} <span style={{ color: "var(--text-main)", fontWeight: 600 }}>Ajay M</span>. All rights reserved.
+          </p>
           <div style={{ display: "flex", gap: "1.2rem" }}>
             <span>Privacy</span>
             <span>Terms</span>
